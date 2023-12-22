@@ -1,0 +1,28 @@
+from sklearn.datasets import load_breast_cancer
+from sklearn.model_selection import train_test_split
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.metrics import confusion_matrix, precision_score, recall_score, accuracy_score
+#BreastCancerデータセットの読み込み
+data = load_breast_cancer()
+x = data.data
+y = data.target
+#データを学習データ、テストデータにセット分割
+x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state=42)
+#決定木モデルの作成
+model = DecisionTreeClassifier(random_state=42)
+model.fit(x_train, y_train)
+#テストデータで予測
+y_pred = model.predict(x_test)
+#混同行列の作成
+cm = confusion_matrix(y_test, y_pred)
+#適合率、再現率、正解率を計算
+precision = precision_score(y_test, y_pred)
+recall = recall_score(y_test, y_pred)
+accuracy = accuracy_score(y_test, y_pred)
+
+#結果の表示
+print("Confusion Matrix:")
+print(cm)
+print("Precision:", precision)
+print("Recall:", recall)
+print("Accuracy:", accuracy)
